@@ -74,10 +74,8 @@ function Tables() {
               <TableRow key={user.user_id}>
                 <TableCell>
                   <div className="flex items-center text-sm">
-                    <Avatar className="hidden mr-3 md:block" alt="User avatar" />
                     <div>
                       <p className="font-semibold">{user.user_id}</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">{user.username}</p>
                     </div>
                   </div>
                 </TableCell>

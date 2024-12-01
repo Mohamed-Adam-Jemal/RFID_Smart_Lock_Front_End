@@ -63,7 +63,6 @@ function Dashboard() {
               <TableRow key={i}>
                 <TableCell>
                   <div className="flex items-center text-sm">
-                    <Avatar className="hidden mr-3 md:block" alt="User image" />
                     <div>
                       <p className="font-semibold">{log.username || 'N/A'}</p>
                     </div>
