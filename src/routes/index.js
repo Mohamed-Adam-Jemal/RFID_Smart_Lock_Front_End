@@ -22,31 +22,17 @@ const Blank = lazy(() => import('../pages/Blank'))
  */
 const routes = [
   {
-    path: '/dashboard', // the url
+    path: '/access-log', // the url
     component: AccessLog, // view rendered
   },
   {
-    path: '/tables',
+    path: '/users',
     component: Users,
   },
   {
-    path: '/forms',
+    path: '/add-user',
     component: Forms,
   },
-  {
-    path: '/cards',
-    component: Cards,
-  },
-
-  {
-    path: '/buttons',
-    component: Buttons,
-  },
-  {
-    path: '/modals',
-    component: Modals,
-  },
-  
   {
     path: '/404',
     component: Page404,

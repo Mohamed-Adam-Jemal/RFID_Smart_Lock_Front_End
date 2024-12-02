@@ -30,7 +30,7 @@ const Forms = () => {
     setErrorMessage(''); // Clear previous error message
 
     try {
-      const response = await fetch("http://localhost:8000/api/add-user/", { // API endpoint for adding user
+      const response = await fetch("http://192.168.1.21:8000/api/add-user/", { // API endpoint for adding user
         method: "POST", // Use POST method
         headers: {
           "Content-Type": "application/json", // Sending JSON data

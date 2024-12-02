@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PageTitle from '../components/Typography/PageTitle';
 import SectionTitle from '../components/Typography/SectionTitle';
-import CTA from '../components/CTA';
+
 import {
   Table,
   TableHeader,
@@ -33,7 +33,7 @@ function Tables() {
   // Fetch users from the API
   useEffect(() => {
     axios
-      .get('http://127.0.0.1:8000/api/get-users/')
+      .get('http://192.168.1.21:8000/api/get-users/')
       .then((response) => {
         setDataTable2(response.data);
       })
@@ -45,7 +45,7 @@ function Tables() {
   // Handle delete user
   const handleDelete = (userId) => {
     axios
-      .delete(`http://127.0.0.1:8000/api/delete-user/${userId}/`)
+      .delete(`http://192.168.1.21:8000/api/delete-user/${userId}/`)
       .then((response) => {
         console.log("User deleted:", response);
         // After successful deletion, update the table by removing the deleted user

@@ -7,17 +7,17 @@
  */
 const routes = [
   {
-    path: '/app/dashboard', // the url
+    path: '/app/access-log', // the url
     icon: 'ModalsIcon', // the component being exported from icons/index.js
     name: 'Access Log', // name that appear in Sidebar
   },
   {
-    path: '/app/tables',
+    path: '/app/users',
     icon: 'TablesIcon',
     name: 'Users',
   },
   {
-    path: '/app/forms',
+    path: '/app/add-user',
     icon: 'FormsIcon',
     name: 'Add User',
   },

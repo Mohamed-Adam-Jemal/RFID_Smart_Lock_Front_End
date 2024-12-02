@@ -36,7 +36,7 @@ function Dashboard() {
 
   // Fetch data on component mount
   useEffect(() => {
-    axios.get('http://localhost:8000/api/get-access-log/')
+    axios.get('http://192.168.1.21:8000/api/get-access-log/')
       .then(response => {
         setData(response.data) // Set the fetched data to state
       })
