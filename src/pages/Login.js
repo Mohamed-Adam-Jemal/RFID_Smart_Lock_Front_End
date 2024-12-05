@@ -1,77 +1,56 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Label, Input, Button } from '@windmill/react-ui';
+import { useAuth } from '../context/AuthContext';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [redirectToAccessLog, setRedirectToAccessLog] = useState(false);
-
-  // Disable browser back/forward navigation on login page
-  useEffect(() => {
-    // Push a new state to the history stack to prevent navigating back
-    window.history.pushState(null, '', window.location.href);
-
-    const handlePopState = (e) => {
-      window.history.pushState(null, '', window.location.href); // Push state to keep user on the page
-    };
-
-    window.addEventListener('popstate', handlePopState);
-
-    return () => {
-      // Clean up event listener when the component unmounts
-      window.removeEventListener('popstate', handlePopState);
-    };
-  }, []);
+  const { login } = useAuth(); // Use the login function from AuthContext
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
+      // Prepare the data to be sent in x-www-form-urlencoded format
+      const formData = new URLSearchParams();
+      formData.append('username', username);
+      formData.append('password', password);
+
+      // Send POST request to verify login credentials
       const response = await fetch('http://192.168.1.21:8000/api/login/', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/x-www-form-urlencoded', // Set the correct content type
         },
-        body: new URLSearchParams({
-          username: username,
-          password: password,
-        }),
+        body: formData.toString(), // Send the data as a URL-encoded string
       });
 
       const data = await response.json();
 
-      if (response.status === 200) {
-        console.log('Login successful');
-        setRedirectToAccessLog(true); // Trigger redirection
+      if (response.ok) {
+        // If login is successful, call the login function from AuthContext
+        login();
+        setRedirectToAccessLog(true); // Redirect to the protected page
       } else {
-        setErrorMessage(data.message || 'Invalid username or password');
-        // Clear the username and password fields after a failed attempt
-        setUsername('');
-        setPassword('');
-
-        // Hide the error message after 2 seconds
+        // If login failed, show the error message from the backend
+        setErrorMessage(data.error || 'Invalid username or password');
+        
+        // Clear the error message after 2 seconds
         setTimeout(() => {
           setErrorMessage('');
         }, 2000);
       }
     } catch (error) {
-      console.error('Error during login:', error);
-      setErrorMessage('An error occurred. Please try again later.');
-      // Clear the username and password fields after an error
-      setUsername('');
-      setPassword('');
-
-      // Hide the error message after 2 seconds
-      setTimeout(() => {
-        setErrorMessage('');
-      }, 2000);
+      setErrorMessage('An error occurred while trying to log in');
+      console.error('Login error:', error);
     }
   };
 
-  // Function to clear the error message when the user starts typing
   const handleInputChange = () => {
+    // Clear error message when the user starts typing
     if (errorMessage) {
       setErrorMessage('');
     }
@@ -96,11 +75,9 @@ function Login() {
                     className="mt-1"
                     type="text"
                     value={username}
-                    onChange={(e) => {
-                      setUsername(e.target.value);
-                      handleInputChange(); // Clear error message on input change
-                    }}
+                    onChange={(e) => setUsername(e.target.value)}
                     required
+                    onFocus={handleInputChange} // Clear error on focus
                   />
                 </Label>
 
@@ -110,17 +87,17 @@ function Login() {
                     className="mt-1"
                     type="password"
                     value={password}
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                      handleInputChange(); // Clear error message on input change
-                    }}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
+                    onFocus={handleInputChange} // Clear error on focus
                   />
                 </Label>
 
-                {errorMessage && (
-                  <div className="text-red-500 mt-2">{errorMessage}</div>
-                )}
+                <div
+                  className={`text-red-500 mt-2 error-message ${errorMessage ? 'show' : ''}`}
+                >
+                  {errorMessage}
+                </div>
 
                 <Button className="mt-4" block type="submit">
                   Log in

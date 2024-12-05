@@ -148961,3 +148961,16 @@ video {
     box-shadow: 0 0 0 3px hsla(327.4, 82.9%, 83.9%, 0.45);
   }
 }
+/* Error message styling */
+.error-message {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+  margin-top: 8px; /* optional: for spacing between the input and the message */
+}
+
+/* Show the error message when it's active */
+.error-message.show {
+  opacity: 1;
+  visibility: visible;
+}
