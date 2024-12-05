@@ -11,8 +11,6 @@ import {
   TableCell,
   TableRow,
   TableFooter,
-  Avatar,
-  Badge,
   Pagination,
 } from '@windmill/react-ui';
 
@@ -34,7 +32,11 @@ function Dashboard() {
     const fetchData = () => {
       axios.get('http://192.168.1.21:8000/api/get-access-log/')
         .then(response => {
-          setData(response.data); // Set the fetched data to state
+          // Only update the state if the data is valid (not null, undefined, or 0)
+          const validData = response.data.filter(log => log && log.username && log.rfid_tag && log.access_time);
+          if (validData.length > 0) {
+            setData(validData); // Set the fetched data to state if it's valid
+          }
         })
         .catch(error => {
           console.error('There was an error fetching the access logs:', error);
