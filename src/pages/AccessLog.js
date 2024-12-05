@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // Import Axios for making HTTP requests
 
-import PageTitle from '../components/Typography/PageTitle'
+import PageTitle from '../components/Typography/PageTitle';
 
 import {
   TableBody,
@@ -14,30 +14,44 @@ import {
   Avatar,
   Badge,
   Pagination,
-} from '@windmill/react-ui'
+} from '@windmill/react-ui';
 
 function Dashboard() {
-  const [page, setPage] = useState(1)
-  const [data, setData] = useState([])
+  const [page, setPage] = useState(1);
+  const [data, setData] = useState([]);
 
   // pagination setup
-  const resultsPerPage = 10
+  const resultsPerPage = 10;
 
   // pagination change control
   function onPageChange(p) {
-    setPage(p)
+    setPage(p);
   }
 
-  // Fetch data on component mount
+  // Fetch data on component mount and set up periodic updates
   useEffect(() => {
-    axios.get('http://192.168.1.21:8000/api/get-access-log/')
-      .then(response => {
-        setData(response.data) // Set the fetched data to state
-      })
-      .catch(error => {
-        console.error('There was an error fetching the access logs:', error)
-      })
-  }, [])
+    // Function to fetch data
+    const fetchData = () => {
+      axios.get('http://192.168.1.21:8000/api/get-access-log/')
+        .then(response => {
+          setData(response.data); // Set the fetched data to state
+        })
+        .catch(error => {
+          console.error('There was an error fetching the access logs:', error);
+        });
+    };
+
+    // Fetch data initially
+    fetchData();
+
+    // Set up an interval to fetch data every 10 seconds (10000ms)
+    const intervalId = setInterval(() => {
+      fetchData();
+    }, 1000); // Fetch new data every 10 seconds
+
+    // Clean up the interval when the component is unmounted
+    return () => clearInterval(intervalId);
+  }, []); // Empty dependency array to run once when component mounts
 
   return (
     <>
@@ -85,7 +99,7 @@ function Dashboard() {
       <div className="grid gap-6 mb-8 md:grid-cols-2">
       </div>
     </>
-  )
+  );
 }
 
-export default Dashboard
+export default Dashboard;
