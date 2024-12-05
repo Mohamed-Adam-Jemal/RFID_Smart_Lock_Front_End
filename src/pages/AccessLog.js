@@ -32,7 +32,6 @@ function Dashboard() {
     const fetchData = () => {
       axios.get('http://192.168.1.21:8000/api/get-access-log/')
         .then(response => {
-          // Only update the state if the data is valid (not null, undefined, or 0)
           const validData = response.data.filter(log => log && log.username && log.rfid_tag && log.access_time);
           if (validData.length > 0) {
             setData(validData); // Set the fetched data to state if it's valid
