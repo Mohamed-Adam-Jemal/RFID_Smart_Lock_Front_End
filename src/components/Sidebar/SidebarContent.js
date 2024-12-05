@@ -41,14 +41,6 @@ function SidebarContent() {
           )
         )}
       </ul>
-      <div className="px-6 my-6">
-        <Button>
-          Remote Controle
-          <span className="ml-2" aria-hidden="true">
-            &rarr;
-          </span>
-        </Button>
-      </div>
     </div>
   )
 }

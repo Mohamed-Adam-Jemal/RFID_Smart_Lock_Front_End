@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Label, Input, Button } from '@windmill/react-ui';
 
@@ -7,6 +7,23 @@ function Login() {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [redirectToAccessLog, setRedirectToAccessLog] = useState(false);
+
+  // Disable browser back/forward navigation on login page
+  useEffect(() => {
+    // Push a new state to the history stack to prevent navigating back
+    window.history.pushState(null, '', window.location.href);
+
+    const handlePopState = (e) => {
+      window.history.pushState(null, '', window.location.href); // Push state to keep user on the page
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      // Clean up event listener when the component unmounts
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -30,10 +47,33 @@ function Login() {
         setRedirectToAccessLog(true); // Trigger redirection
       } else {
         setErrorMessage(data.message || 'Invalid username or password');
+        // Clear the username and password fields after a failed attempt
+        setUsername('');
+        setPassword('');
+
+        // Hide the error message after 2 seconds
+        setTimeout(() => {
+          setErrorMessage('');
+        }, 2000);
       }
     } catch (error) {
       console.error('Error during login:', error);
       setErrorMessage('An error occurred. Please try again later.');
+      // Clear the username and password fields after an error
+      setUsername('');
+      setPassword('');
+
+      // Hide the error message after 2 seconds
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 2000);
+    }
+  };
+
+  // Function to clear the error message when the user starts typing
+  const handleInputChange = () => {
+    if (errorMessage) {
+      setErrorMessage('');
     }
   };
 
@@ -56,7 +96,10 @@ function Login() {
                     className="mt-1"
                     type="text"
                     value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    onChange={(e) => {
+                      setUsername(e.target.value);
+                      handleInputChange(); // Clear error message on input change
+                    }}
                     required
                   />
                 </Label>
@@ -67,7 +110,10 @@ function Login() {
                     className="mt-1"
                     type="password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      handleInputChange(); // Clear error message on input change
+                    }}
                     required
                   />
                 </Label>

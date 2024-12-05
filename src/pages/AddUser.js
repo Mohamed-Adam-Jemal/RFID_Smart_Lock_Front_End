@@ -79,6 +79,7 @@ const Forms = () => {
               value={userData.username}
               onChange={handleChange}
               className="mt-1"
+              required
             />
           </Label>
 
@@ -89,6 +90,7 @@ const Forms = () => {
               value={userData.rfid_tag}
               onChange={handleChange}
               className="mt-1"
+              required
             />
           </Label>
 
