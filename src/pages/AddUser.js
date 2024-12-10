@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Input, Label } from '@windmill/react-ui';
 import PageTitle from '../components/Typography/PageTitle';
 
+const serverIP = "http://172.16.48.73:8000/api";
+const addUserEndpoint = "/add-user/";
+
 const Forms = () => {
   const [userData, setUserData] = useState({
     username: '',
@@ -30,7 +33,7 @@ const Forms = () => {
     setErrorMessage(''); // Clear previous error message
 
     try {
-      const response = await fetch("http://192.168.1.21:8000/api/add-user/", { // API endpoint for adding user
+      const response = await fetch(serverIP+addUserEndpoint, { // API endpoint for adding user
         method: "POST", // Use POST method
         headers: {
           "Content-Type": "application/json", // Sending JSON data

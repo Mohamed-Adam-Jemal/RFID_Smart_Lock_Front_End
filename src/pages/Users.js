@@ -18,6 +18,10 @@ import {
 } from '@windmill/react-ui';
 import { TrashIcon } from '../icons';
 
+const serverIP = "http://172.16.48.73:8000/api";
+const getUsersEndpoint = "/get-users/";
+const deleteUserEndpoint = "/delete-user/"
+
 function Tables() {
   const [pageTable2, setPageTable2] = useState(1);
   const [dataTable2, setDataTable2] = useState([]);
@@ -33,7 +37,7 @@ function Tables() {
   // Fetch users from the API
   useEffect(() => {
     axios
-      .get('http://192.168.1.21:8000/api/get-users/')
+      .get(serverIP+getUsersEndpoint)
       .then((response) => {
         setDataTable2(response.data);
       })
@@ -45,7 +49,7 @@ function Tables() {
   // Handle delete user
   const handleDelete = (userId) => {
     axios
-      .delete(`http://192.168.1.21:8000/api/delete-user/${userId}/`)
+      .delete(`${serverIP}${deleteUserEndpoint}${userId}/`)
       .then((response) => {
         console.log("User deleted:", response);
         // After successful deletion, update the table by removing the deleted user

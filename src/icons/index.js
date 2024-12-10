@@ -26,6 +26,9 @@ import { ReactComponent as DropdownIcon } from './dropdown.svg'
 import { ReactComponent as OutlinePersonIcon } from './outlinePerson.svg'
 import { ReactComponent as OutlineCogIcon } from './outlineCog.svg'
 import { ReactComponent as OutlineLogoutIcon } from './outlineLogout.svg'
+import { ReactComponent as UserIcon } from './user.svg'
+import { ReactComponent as AddUserIcon } from './addUser.svg'
+import { ReactComponent as AccessLogIcon } from './access_log.svg'
 
 export {
   ButtonsIcon,
@@ -56,4 +59,7 @@ export {
   OutlinePersonIcon,
   OutlineCogIcon,
   OutlineLogoutIcon,
+  AddUserIcon,
+  UserIcon,
+  AccessLogIcon
 }
