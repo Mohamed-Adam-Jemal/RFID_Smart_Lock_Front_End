@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Label, Input, Button } from '@windmill/react-ui';
 import { useAuth } from '../context/AuthContext';
+import config from '../config';
 
-const serverIP = "http://172.16.48.73:8000/api";
 const loginEndpoint = "/login/";
 
 function Login() {
@@ -23,7 +23,7 @@ function Login() {
       formData.append('password', password);
 
       // Send POST request to verify login credentials
-      const response = await fetch(serverIP+loginEndpoint, {
+      const response = await fetch(`${config.serverUrl}`+loginEndpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded', // Set the correct content type

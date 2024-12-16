@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // Import Axios for making HTTP requests
-
+import config from '../config';
 import PageTitle from '../components/Typography/PageTitle';
 
 import {
@@ -14,7 +14,6 @@ import {
   Pagination,
 } from '@windmill/react-ui';
 
-const serverIP = "http://172.16.48.73:8000/api";
 const getAccessLogEndpoint = "/get-access-log/";
 
 function Dashboard() {
@@ -33,7 +32,7 @@ function Dashboard() {
   useEffect(() => {
     // Function to fetch data
     const fetchData = () => {
-      axios.get(serverIP+getAccessLogEndpoint)
+      axios.get(`${config.serverUrl}`+getAccessLogEndpoint)
         .then(response => {
           const validData = response.data.filter(log => log && log.username && log.rfid_tag && log.access_time);
           if (validData.length > 0) {
@@ -51,7 +50,7 @@ function Dashboard() {
     // Set up an interval to fetch data every 10 seconds (10000ms)
     const intervalId = setInterval(() => {
       fetchData();
-    }, 10000); // Fetch new data every 10 seconds
+    }, 100); // Fetch new data every 10 seconds
 
     // Clean up the interval when the component is unmounted
     return () => clearInterval(intervalId);

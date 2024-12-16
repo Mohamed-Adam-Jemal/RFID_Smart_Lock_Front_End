@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PageTitle from '../components/Typography/PageTitle';
 import SectionTitle from '../components/Typography/SectionTitle';
-
+import config from '../config';
 import {
   Table,
   TableHeader,
@@ -18,7 +18,6 @@ import {
 } from '@windmill/react-ui';
 import { TrashIcon } from '../icons';
 
-const serverIP = "http://172.16.48.73:8000/api";
 const getUsersEndpoint = "/get-users/";
 const deleteUserEndpoint = "/delete-user/"
 
@@ -37,7 +36,7 @@ function Tables() {
   // Fetch users from the API
   useEffect(() => {
     axios
-      .get(serverIP+getUsersEndpoint)
+      .get(`${config.serverUrl}`+getUsersEndpoint)
       .then((response) => {
         setDataTable2(response.data);
       })
@@ -49,7 +48,7 @@ function Tables() {
   // Handle delete user
   const handleDelete = (userId) => {
     axios
-      .delete(`${serverIP}${deleteUserEndpoint}${userId}/`)
+      .delete(`${config.serverUrl}${deleteUserEndpoint}${userId}/`)
       .then((response) => {
         console.log("User deleted:", response);
         // After successful deletion, update the table by removing the deleted user
