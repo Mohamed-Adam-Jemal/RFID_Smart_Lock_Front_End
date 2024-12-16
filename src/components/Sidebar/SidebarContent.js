@@ -3,7 +3,7 @@ import routes from '../../routes/sidebar'
 import { NavLink, Route } from 'react-router-dom'
 import * as Icons from '../../icons'
 import SidebarSubmenu from './SidebarSubmenu'
-import { Button } from '@windmill/react-ui'
+
 
 function Icon({ icon, ...props }) {
   const Icon = Icons[icon]
@@ -41,14 +41,6 @@ function SidebarContent() {
           )
         )}
       </ul>
-      <div className="px-6 my-6">
-        <Button>
-          Remote Controle
-          <span className="ml-2" aria-hidden="true">
-            &rarr;
-          </span>
-        </Button>
-      </div>
     </div>
   )
 }

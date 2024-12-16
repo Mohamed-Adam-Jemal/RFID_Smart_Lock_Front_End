@@ -1,0 +1,22 @@
+<svg
+  fill="none"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  viewBox="0 0 24 24"
+  stroke="currentColor"
+  width="48px"
+  height="48px"
+>
+  <!-- Head (Circle) -->
+  <circle cx="12" cy="9.5" r="4" />
+  
+  <!-- Body (Simple curve shape) -->
+  <path d="M6 21v-2c0-2.7 2.3-5 5-5h2c2.7 0 5 2.3 5 5v2H6z" />
+
+  <!-- Plus Sign (Horizontal Line) -->
+  <path d="M18 8h4" />
+  
+  <!-- Plus Sign (Vertical Line) -->
+  <path d="M20 6v4" />
+</svg>

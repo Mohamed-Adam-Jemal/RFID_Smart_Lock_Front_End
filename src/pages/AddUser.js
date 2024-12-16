@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Input, Label } from '@windmill/react-ui';
 import PageTitle from '../components/Typography/PageTitle';
+import config from '../config';
+const addUserEndpoint = "/add-user/";
 
 const Forms = () => {
   const [userData, setUserData] = useState({
@@ -30,7 +32,7 @@ const Forms = () => {
     setErrorMessage(''); // Clear previous error message
 
     try {
-      const response = await fetch("http://192.168.1.21:8000/api/add-user/", { // API endpoint for adding user
+      const response = await fetch(`${config.serverUrl}`+addUserEndpoint, { // API endpoint for adding user
         method: "POST", // Use POST method
         headers: {
           "Content-Type": "application/json", // Sending JSON data
@@ -79,6 +81,7 @@ const Forms = () => {
               value={userData.username}
               onChange={handleChange}
               className="mt-1"
+              required
             />
           </Label>
 
@@ -89,6 +92,7 @@ const Forms = () => {
               value={userData.rfid_tag}
               onChange={handleChange}
               className="mt-1"
+              required
             />
           </Label>
 
